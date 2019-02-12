@@ -2,27 +2,31 @@ package eu.epiciv.main;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import eu.epiciv.scrollmanager.ScrollManager;
+import eu.epiciv.menu.managers.GameStateManager;
+import eu.epiciv.menu.states.MainMenu;
 
 public class Main extends ApplicationAdapter {
-	ScrollManager scroll;
-	float delta;
-	
+
+	private GameStateManager gsm;
+	private SpriteBatch sb;
+
 	@Override
 	public void create () {
-		scroll = new ScrollManager();
+		this.gsm = new GameStateManager();
+		this.sb = new SpriteBatch();
+
+		this.gsm.push(new MainMenu(this.gsm));
 	}
 
 	@Override
 	public void render () {
-		scroll.render(delta);
+		this.gsm.update(Gdx.graphics.getDeltaTime());
+		this.gsm.render(this.sb);
 	}
-	
+
 	@Override
 	public void dispose () {
-		scroll.dispose();
+		this.sb.dispose();
 	}
 }
