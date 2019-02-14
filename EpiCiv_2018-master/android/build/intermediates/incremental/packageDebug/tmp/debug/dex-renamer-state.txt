@@ -1,4 +1,0 @@
-#Wed Feb 13 22:29:19 CET 2019
-base.0=/home/tarek/Documents/EpiCiv_2018/EpiCiv_2018-master/android/build/intermediates/dex/debug/mergeDexDebug/out
-path.0=classes.dex
-renamed.0=classes.dex
