@@ -18,13 +18,13 @@ import java.util.ArrayList;
 public class Manage_game implements Screen, GestureDetector.GestureListener {
 
     private SpriteBatch batch;
-    ArrayList al = new ArrayList();
-    ArrayList ad = new ArrayList();
-    ArrayList temp = new ArrayList();
+    public ArrayList al = new ArrayList();
+    public ArrayList ad = new ArrayList();
+    public ArrayList temp = new ArrayList();
     private Sprite sprite;
-    OrthographicCamera camera;
+    private OrthographicCamera camera;
     boolean noTouch = false;
-    Vector3 touchPosition;
+    private Vector3 touchPosition;
     private float pos_cam_X = 0;
     private float pos_cam_Y = 0;
     private float temp_X = 0;
@@ -35,38 +35,38 @@ public class Manage_game implements Screen, GestureDetector.GestureListener {
     float delta;
     public Pixmap pixmap;
     public Color color;
-    unit u;
-    unit act = null;
-    Texture my = new Texture("my.png");
-    Texture adv = new Texture("adv.png");
+    public Unit unit;
+    public Unit type = null;
+    public Texture blue_select = new Texture("divers/blue_select.png");
+    public Texture red_select = new Texture("divers/red_select.png");
 
     public Manage_game() {
         batch = new SpriteBatch();
-        u = new unit();
-        u.castle(480, 640);
-        al.add(u);
-        u = new unit();
-        u.lancier(480, 640);
-        al.add(u);
-        u = new unit();
-        u.castle(480, 704);
-        ad.add(u);
-        u = new unit();
-        u.lancier(480, 704);
-        ad.add(u);
+        unit = new Unit();
+        unit.castle(480, 640);
+        al.add(unit);
+        unit = new Unit();
+        unit.lancier(480, 640);
+        al.add(unit);
+        unit = new Unit();
+        unit.castle(480, 704);
+        ad.add(unit);
+        unit = new Unit();
+        unit.lancier(480, 704);
+        ad.add(unit);
         for (int i = 0; i < al.size(); i++) {
-            u = (unit) al.get(i);
-            u.mvt = u.mv;
+            unit = (Unit) al.get(i);
+            unit.mvt = unit.mv;
         }
-        this.pixmap = new Pixmap(Gdx.files.internal("map.png"));
+        this.pixmap = new Pixmap(Gdx.files.internal("divers/map.png"));
         this.color = new Color();
         batch = new SpriteBatch();
-        sprite = new Sprite(new Texture(Gdx.files.internal("map.png")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("divers/map.png")));
         aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
         camera = new OrthographicCamera(GAME_WORLD_WIDTH, GAME_WORLD_HEIGHT);
-        u = (unit)al.get(0);
-        camera.position.x = u.x;
-        camera.position.y = u.y;
+        unit = (Unit)al.get(0);
+        camera.position.x = unit.x;
+        camera.position.y = unit.y;
         camera.viewportWidth = Gdx.graphics.getWidth() / 2;
         camera.viewportHeight = Gdx.graphics.getHeight() / 2;
         camera.update();
@@ -91,17 +91,17 @@ public class Manage_game implements Screen, GestureDetector.GestureListener {
         batch.begin();
         sprite.draw(batch);
         for (int i = 0; i < al.size(); i++) {
-            u = (unit) al.get(i);
-            if (u.recruit >= 0) {
-                batch.draw(my, u.x, u.y);
-                batch.draw(u.img, u.x, u.y);
+            unit = (Unit) al.get(i);
+            if (unit.recruit >= 0) {
+                batch.draw(blue_select, unit.x, unit.y);
+                batch.draw(unit.img, unit.x, unit.y);
             }
         }
         for (int i = 0; i < ad.size(); i++) {
-            u = (unit) ad.get(i);
-            if (u.recruit >= 0) {
-                batch.draw(adv, u.x, u.y);
-                batch.draw(u.img, u.x, u.y);
+            unit = (Unit) ad.get(i);
+            if (unit.recruit >= 0) {
+                batch.draw(red_select, unit.x, unit.y);
+                batch.draw(unit.img, unit.x, unit.y);
             }        }
         batch.end();
     }
@@ -125,8 +125,7 @@ public class Manage_game implements Screen, GestureDetector.GestureListener {
             for (float x = x1 + 1; x < x1 + size; x++) {
                 int val = pixmap.getPixel((int) x, (int) y);
                 Color.rgba8888ToColor(color, val);
-                System.out.println(color.r * 255 + " " + color.g * 255 + " " + color.b * 255);
-                if (((int) (color.b * 255) >= 150 && (int) (color.b * 255) <= 156 && (int) (color.r * 255) >= 18 && (int) (color.r * 255) <= 24 && (int) (color.g * 255) >= 105 && (int) (color.g * 255) <= 111)) {
+                if (((int) (color.b * 255) >= 150 && (int) (color.b * 255) <= 156 && (int) (color.r * 255) >= 18 && (int) (color.r * 255) <= 24 && (int) (color.g * 255) >= 105 && (int) (color.g * 255) <= 111) || ((int) (color.b * 255) >= 34 && (int) (color.b * 255) <= 40 && (int) (color.r * 255) >= 47 && (int) (color.r * 255) <= 53 && (int) (color.g * 255) >= 30 && (int) (color.g * 255) <= 36)) {
                     return (false);
                 }
             }
@@ -135,13 +134,12 @@ public class Manage_game implements Screen, GestureDetector.GestureListener {
     }
 
 
-
     @Override
     public void dispose() {
         sprite.getTexture().dispose();
         for (int i = 0; i < al.size(); i++) {
-            u = (unit) al.get(i);
-            u.img.dispose();
+            unit = (Unit) al.get(i);
+            unit.img.dispose();
         }
     }
 
@@ -185,62 +183,62 @@ public class Manage_game implements Screen, GestureDetector.GestureListener {
             float x = (camera.position.x + (Gdx.input.getX() / (2 / (float)0.3)) - (Gdx.graphics.getWidth() / (4 / (float)0.3))) / 32;
             float y = 1 + (camera.position.y + (Gdx.graphics.getHeight() / 8) - (Gdx.input.getY() / (2 / (float)0.3)) - (Gdx.graphics.getHeight() / (4 / (float)0.3))) / 32;
             for (int i = 0; i < al.size(); i++) {
-                u = (unit) al.get(i);
-                if (u.x == (int)x * 32 && u.y == (int)y * 32 && u.recruit >= 0) {
-                    act = u;
+                unit = (Unit) al.get(i);
+                if (unit.x == (int)x * 32 && unit.y == (int)y * 32 && unit.recruit >= 0) {
+                    type = unit;
                     test2 = true;
                 }
-                if (act != null && u.x == act.x && u.y == act.y && u.recruit < 0) {
-                    test = u.type;
+                if (type != null && unit.x == type.x && unit.y == type.y && unit.recruit < 0) {
+                    test = unit.type;
                 }
             }
             int j = ad.size() - 1;
-            for (int i = j; i >= 0 && act != null && (act.mvt > 0 || i < j); i--) {
-                u = (unit) ad.get(i);
-                if (u.recruit >= 0 && u.x == (int)x * 32 && u.y == (int)y * 32 && check((int)x * 32, (int)y * 32, 32) && act.x/32 - (int)x < 2 && act.x/32 - (int)x > -2 && act.y/32 - (int)y < 2 && act.y/32 - (int)y > -2) {
+            for (int i = j; i >= 0 && type != null && (type.mvt > 0 || i < j); i--) {
+                unit = (Unit) ad.get(i);
+                if (unit.recruit >= 0 && unit.x == (int)x * 32 && unit.y == (int)y * 32 && check((int)x * 32, (this.pixmap.getHeight() - 33 - (int)y * 32),32) && type.x/32 - (int)x < 2 && type.x/32 - (int)x > -2 && type.y/32 - (int)y < 2 && type.y/32 - (int)y > -2) {
                     test2 = true;
-                    act.mvt = 0;
+                    type.mvt = 0;
                     fight(i);
                 }
             }
-            if (!test2 && act != null && act.mvt > 0 && check((int)x * 32, (int)y * 32, 32)&& act.x/32 - (int)x < 2 && act.x/32 - (int)x > -2 && act.y/32 - (int)y < 2 && act.y/32 - (int)y > -2) {
-                act.x = (int) x * 32;
-                act.y = (int) y * 32;
-                act.mvt -= 1;
+            if (!test2 && type != null && type.mvt > 0 && check((int)x * 32, (this.pixmap.getHeight() - 33 - (int)y * 32), 32)&& type.x/32 - (int)x < 2 && type.x/32 - (int)x > -2 && type.y/32 - (int)y < 2 && type.y/32 - (int)y > -2) {
+                type.x = (int) x * 32;
+                type.y = (int) y * 32;
+                type.mvt -= 1;
             }
-            if (act != null && act.mv == 0 && test == null) {
-                u = new unit();
-                u.lancier(act.x, act.y);
-                al.add(u);
+            if (type != null && type.mv == 0 && test == null) {
+                unit = new Unit();
+                unit.lancier(type.x, type.y);
+                al.add(unit);
             }
         }
     }
 
     public void fight(int i) {
-        while (u.pv > 0 && act.pv > 0) {
-            if (Math.random() * (act.win + u.win) < act.win) {
-                u.pv -= act.dgt;
+        while (unit.pv > 0 && type.pv > 0) {
+            if (Math.random() * (type.win + unit.win) < type.win) {
+                unit.pv -= type.dgt;
             } else {
-                act.pv -= u.dgt;
+                type.pv -= unit.dgt;
             }
         }
-        if (act.pv > 0) {
-            act.x = u.x;
-            act.y = u.y;
+        if (type.pv > 0) {
+            type.x = unit.x;
+            type.y = unit.y;
             for (int j = i; j < ad.size(); j++) {
-                u = (unit)ad.get(j);
-                if (u.x == act.x && u.y == act.y) {
+                unit = (Unit)ad.get(j);
+                if (unit.x == type.x && unit.y == type.y) {
                     ad.remove(j);
                 }
             }
         } else {
             for (int j = 0; j < al.size(); j++) {
-                u = (unit)al.get(j);
-                if (u.x == act.x && u.y == act.y) {
+                unit = (Unit)al.get(j);
+                if (unit.x == type.x && unit.y == type.y) {
                     i = j;
                 }
             }
-            act = null;
+            type = null;
             al.remove(i);
         }
     }

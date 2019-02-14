@@ -11,23 +11,23 @@ import eu.epiciv.menu.states.GameState;
 
 public class Main_game extends GameState {
 
-	Sprite sprite;
+	Sprite user_interface;
 	SpriteBatch batch;
 	Sprite turn;
 	Manage_game scroll;
 	float delta;
 	BitmapFont font;
-	unit stat;
-	int kk = 1;
+	Unit stat;
+	int bool_turn = 1;
 
 	public Main_game(GameStateManager gsm) {
 		super(gsm);
-		stat = new unit();
-		turn = new Sprite(new Texture(Gdx.files.internal("turn.png")));
+		stat = new Unit();
+		turn = new Sprite(new Texture(Gdx.files.internal("divers/turn.png")));
 		scroll = new Manage_game();
 		font = new BitmapFont();
 		batch = new SpriteBatch();
-		sprite = new Sprite(new Texture(Gdx.files.internal("ui.png")));
+		user_interface = new Sprite(new Texture(Gdx.files.internal("divers/ui.png")));
 	}
 
 	@Override
@@ -44,14 +44,14 @@ public class Main_game extends GameState {
 				scroll.temp = scroll.ad;
 				scroll.ad = scroll.al;
 				scroll.al = scroll.temp;
-				scroll.act = null;
+				scroll.type = null;
 				for (int i = 0; i < scroll.al.size(); i++) {
-					scroll.u = (unit) scroll.al.get(i);
-					scroll.u.mvt = scroll.u.mv;
-					if (scroll.u.recruit < 0)
-						scroll.u.recruit++;
+					scroll.unit = (Unit) scroll.al.get(i);
+					scroll.unit.mvt = scroll.unit.mv;
+					if (scroll.unit.recruit < 0)
+						scroll.unit.recruit++;
 				}
-				kk = (kk == 1) ? 2 : 1;
+				bool_turn = (bool_turn == 1) ? 2 : 1;
 			}
 		}
 	}
@@ -63,17 +63,17 @@ public class Main_game extends GameState {
 		scroll.render(delta);
 		batch.begin();
 		font.setColor(0.5f,1.5f,1.5f,0.5f);
-		sprite.setSize(500, Gdx.graphics.getHeight());
-		sprite.setPosition(0,0);
-		sprite.draw(batch);
+		user_interface.setSize(500, Gdx.graphics.getHeight());
+		user_interface.setPosition(0,0);
+		user_interface.draw(batch);
 		turn.draw(batch);
 		font.getData().setScale(4,4);
-		font.draw(batch, "Player " + kk, 40,Gdx.graphics.getHeight() - 50);
-		if (scroll.act != null) {
-			font.draw(batch, scroll.act.type, 40, Gdx.graphics.getHeight() - 250);
-			font.draw(batch, "PV:  " + scroll.act.pv, 40, Gdx.graphics.getHeight() - 400);
-			font.draw(batch, "ATK:  " + scroll.act.dgt, 40, Gdx.graphics.getHeight() - 490);
-			font.draw(batch, "MOVE:  " + scroll.act.mvt, 40, Gdx.graphics.getHeight() - 600);
+		font.draw(batch, "Player " + bool_turn, 40,Gdx.graphics.getHeight() - 50);
+		if (scroll.type != null) {
+			font.draw(batch, scroll.type.type, 40, Gdx.graphics.getHeight() - 250);
+			font.draw(batch, "PV:  " + scroll.type.pv, 40, Gdx.graphics.getHeight() - 400);
+			font.draw(batch, "ATK:  " + scroll.type.dgt, 40, Gdx.graphics.getHeight() - 490);
+			font.draw(batch, "MOVE:  " + scroll.type.mvt, 40, Gdx.graphics.getHeight() - 600);
 		} else {
 			font.draw(batch, "No unit selected", 40, Gdx.graphics.getHeight() - 250);
 		}

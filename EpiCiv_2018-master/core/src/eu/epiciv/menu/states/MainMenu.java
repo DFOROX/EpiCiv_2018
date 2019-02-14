@@ -24,12 +24,15 @@ public class MainMenu extends GameState{
     private float delta;
 
     private GlyphLayout gameTitleGlyph;
-    private Music music = Gdx.audio.newMusic(Gdx.files.internal("music1.mp3"));
+    private Music music = Gdx.audio.newMusic(Gdx.files.internal("music/music_menu.mp3"));
     private int xTouch = 0;
     private int yTouch = 0;
 
     public MainMenu(GameStateManager gsm) {
         super (gsm);
+        this.music.play();
+        this.music.setVolume(0.5f);
+        this.music.setLooping(true);
         this.background = new Texture("home/background.png");
         this.newGameButton = new Texture("buttons/newGameButton.png");
         this.exitButton = new Texture("buttons/exitButton.png");
