@@ -20,12 +20,12 @@ public class Unit {
     public void spearman(int nx, int ny){
         x = nx;
         y = ny;
-        pv = 10;
+        pv = 20;
         mv = 2;
         mvt = 0;
-        dgt = 35;
+        dgt = 6;
         win = 6;
-        recruit = -10;
+        recruit = -4;
         type = "spearman";
         img = new Texture("units/" + type + ".png");
     }
@@ -36,9 +36,9 @@ public class Unit {
         pv = 20;
         mv = 2;
         mvt = 0;
-        dgt = 3;
+        dgt = 4;
         win = 4;
-        recruit = -5;
+        recruit = -2;
         type = "swordsman";
         img = new Texture("units/" + type + ".png");
     }
@@ -46,12 +46,12 @@ public class Unit {
     public void horseman(int nx, int ny){
         x = nx;
         y = ny;
-        pv = 5;
+        pv = 20;
         mv = 4;
         mvt = 0;
-        dgt = 10;
-        win = 5;
-        recruit = -15;
+        dgt = 9;
+        win = 9;
+        recruit = -7;
         type = "horseman";
         img = new Texture("units/" + type + ".png");
     }
@@ -75,7 +75,7 @@ public class Unit {
         mvt = 0;
         dgt = 0;
         win = 0;
-        recruit = -20;
+        recruit = -10;
         type = "builder";
         img = new Texture("units/" + type + ".png");
     }

@@ -19,4 +19,6 @@ public class Constants {
     public final static int castleButtonSizeX = Gdx.graphics.getWidth() / 5;
     public final static int castleButtonSizeY = Gdx.graphics.getHeight() / 8;
     public final static int castleButtonCenterX = uiWidth / 2 - castleButtonSizeX / 2;
+    public final static int createButtonCenterX = VIEWPORT_WIDTH / 2 - castleButtonSizeX / 2;
+//    public final static int CreateButtonSizeX = castleButtonSizeX - Gdx.graphics.getWidth() / 4;
 }

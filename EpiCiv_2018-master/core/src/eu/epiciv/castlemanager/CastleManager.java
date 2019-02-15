@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+import java.util.ArrayList;
+
 import eu.epiciv.gamemanager.Manage_game;
 import eu.epiciv.menu.states.GameState;
 import eu.epiciv.menu.managers.GameStateManager;
@@ -133,26 +135,39 @@ public class CastleManager extends GameState {
         sb.setProjectionMatrix(this.cam.combined);
 
         this.manage_game.batch.begin();
+
         this.manage_game.sprite.draw(this.manage_game.batch);
+        Unit u2;
+        ArrayList<Integer> done = new ArrayList<Integer>();
         for (int i = 0; i < this.manage_game.al.size(); i++) {
             this.manage_game.unit = (Unit) this.manage_game.al.get(i);
             if (this.manage_game.unit.recruit >= 0) {
                 this.manage_game.batch.draw(this.manage_game.blue_select, this.manage_game.unit.x, this.manage_game.unit.y);
                 this.manage_game.batch.draw(this.manage_game.unit.img, this.manage_game.unit.x, this.manage_game.unit.y);
+                for (int j = 0; j < this.manage_game.ad.size(); j++) {
+                    u2 = (Unit) this.manage_game.ad.get(j);
+                    if (u2.recruit >= 0 && this.manage_game.unit.x - u2.x < 4*32 && this.manage_game.unit.x - u2.x > -4*32 && this.manage_game.unit.y - u2.y < 4*32 && this.manage_game.unit.y - u2.y > -4*32) {
+                        boolean test3 = true;
+                        for (int k = 0; k < done.size(); k++) {
+                            if (done.get(k) == j) {
+                                test3 = false;
+                            }
+                        }
+                        if (test3) {
+                            this.manage_game.batch.draw(this.manage_game.red_select, u2.x, u2.y);
+                            this.manage_game.batch.draw(u2.img, u2.x, u2.y);
+                            done.add(j);
+                        }
+                    }
+                }
             }
         }
-        for (int i = 0; i < this.manage_game.ad.size(); i++) {
-            this.manage_game.unit = (Unit) this.manage_game.ad.get(i);
-            if (this.manage_game.unit.recruit >= 0) {
-                this.manage_game.batch.draw(this.manage_game.red_select, this.manage_game.unit.x, this.manage_game.unit.y);
-                this.manage_game.batch.draw(this.manage_game.unit.img, this.manage_game.unit.x, this.manage_game.unit.y);
-            }        }
         this.manage_game.batch.end();
 
         sb.begin();
 
         sb.draw(this.ui, 0, 0, Constants.VIEWPORT_WIDTH / 4, Constants.VIEWPORT_HEIGHT);
-        sb.draw(this.exitButton, Constants.castleButtonCenterX, Constants.castleButtonSizeY, Constants.castleButtonSizeX, Constants.castleButtonSizeX);
+        sb.draw(this.exitButton, Constants.castleButtonCenterX, Constants.castleButtonSizeY, Constants.castleButtonSizeX, Constants.castleButtonSizeY);
         sb.draw(this.builderButton, Constants.castleButtonCenterX, Constants.castleButtonSizeY * 2, Constants.castleButtonSizeX, Constants.castleButtonSizeY);
         sb.draw(this.horsemanButton, Constants.castleButtonCenterX, Constants.castleButtonSizeY * 3, Constants.castleButtonSizeX, Constants.castleButtonSizeY);
         sb.draw(this.swordmanButton, Constants.castleButtonCenterX, Constants.castleButtonSizeY * 4, Constants.castleButtonSizeX, Constants.castleButtonSizeY);

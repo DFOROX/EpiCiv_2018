@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import eu.epiciv.castlemanager.CastleManager;
 import eu.epiciv.menu.managers.GameStateManager;
 import eu.epiciv.menu.states.GameState;
+import eu.epiciv.menu.utils.Constants;
 
 public class Main_game extends GameState {
 
@@ -25,8 +26,14 @@ public class Main_game extends GameState {
 	float size_button_Y;
 	int bool_turn = 1;
 
+//	private CastleCreator createCastle;
+	private Texture createButton = new Texture("buttons/createButton.png");
+	private int xTouch;
+	private int yTouch;
+
 	public Main_game(GameStateManager gsm) {
 		super(gsm);
+
 		stat = new Unit();
 		turn = new Sprite(new Texture(Gdx.files.internal("divers/turn.png")));
 		size_button_X = Gdx.graphics.getWidth() / 9;
@@ -39,10 +46,33 @@ public class Main_game extends GameState {
 
 	@Override
 	protected void handleInput() {
+	    if (Gdx.input.justTouched()) {
+            this.xTouch = Gdx.input.getX();
+            this.yTouch = Gdx.input.getY();
+
+            if (scroll != null && scroll.type != null && scroll.type.dgt == 0) {
+                if (this.xTouch > Constants.createButtonCenterX && this.xTouch < Constants.createButtonCenterX + Constants.buttonSizeX ) {
+                    if (this.yTouch > Constants.buttonSizeY * 7 && this.yTouch < Constants.buttonSizeY * 8) {
+                        scroll.unit = new Unit();
+                        scroll.unit.castle(scroll.type.x, scroll.type.y);
+                        scroll.al.add(scroll.unit);
+                        //destroy builder
+                        for (int j = scroll.al.size() - 1; j >= 0; j -= 1) {
+                            scroll.unit = (Unit)scroll.al.get(j);
+                            if (scroll.unit == scroll.type) {
+								scroll.al.remove(j);
+							}
+                        }
+						scroll.type = null;
+                    }
+                }
+            }
+        }
 	}
 
 	@Override
 	public void update(float dt) {
+	    this.handleInput();
 	}
 
 	public void turn_mangement () {
@@ -77,29 +107,43 @@ public class Main_game extends GameState {
 
 	@Override
 	public void render(SpriteBatch sb) {
-		turn_mangement();
-		scroll.render(delta);
-		batch.begin();
-		font.setColor(0.5f,1.5f,1.5f,0.5f);
-		user_interface.setSize(500, Gdx.graphics.getHeight());
-		user_interface.setPosition(0,0);
-		user_interface.draw(batch);
-		turn.setPosition(Gdx.graphics.getWidth() - size_button_X, 0);
-		turn.setSize(size_button_X, size_button_Y);
-		turn.draw(batch);
-		font.getData().setScale(4,4);
-		font.draw(batch, "Player " + bool_turn, 40,Gdx.graphics.getHeight() - 50);
-		if (scroll.type != null) {
-			font.draw(batch, scroll.type.type, 40, Gdx.graphics.getHeight() - 250);
-			font.draw(batch, "PV:  " + scroll.type.pv, 40, Gdx.graphics.getHeight() - 400);
-			font.draw(batch, "ATK:  " + scroll.type.dgt, 40, Gdx.graphics.getHeight() - 490);
-			font.draw(batch, "MOVE:  " + scroll.type.mvt, 40, Gdx.graphics.getHeight() - 600);
-		} else {
-			font.draw(batch, "No unit selected", 40, Gdx.graphics.getHeight() - 250);
-		}
-		batch.end();
-	}
 
+	        if (Gdx.input.isTouched() && !scroll.noTouch)
+                if (scroll.ad.size() == 0)
+                    System.exit(0);
+
+			turn_mangement();
+			scroll.render(delta);
+			batch.begin();
+			user_interface.setSize(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight());
+			user_interface.setPosition(0,0);
+			font.setColor(0.5f,1.5f,1.5f,0.5f);
+			user_interface.draw(batch);
+            turn.setPosition(Gdx.graphics.getWidth() - size_button_X, 0);
+            turn.setSize(size_button_X, size_button_Y);
+			turn.draw(batch);
+			font.getData().setScale((Gdx.graphics.getWidth()/400 + (Gdx.graphics.getHeight()*61)/(524*11)) / 2, (Gdx.graphics.getWidth()/400 + (Gdx.graphics.getHeight()*61)/(524*11)) / 2);
+			font.draw(batch, "Player " + bool_turn, Gdx.graphics.getWidth()/40,Gdx.graphics.getHeight());
+			font.getData().setScale(Gdx.graphics.getWidth()/400, Gdx.graphics.getWidth()/400);
+			if (scroll.type != null) {
+				font.setColor(0.5f,1.5f,1.5f,0.5f);
+				font.draw(batch, scroll.type.type, 0, Gdx.graphics.getHeight() - ((Gdx.graphics.getHeight()*84)/524));
+				font.draw(batch, "PV:  " + scroll.type.pv, 0, Gdx.graphics.getHeight() - 400);
+				font.draw(batch, "ATK:  " + scroll.type.dgt, 0, Gdx.graphics.getHeight() - 490);
+				font.draw(batch, "MOVE:  " + scroll.type.mvt, 0, Gdx.graphics.getHeight() - 600);
+			} else {
+				font.setColor(1,0,0,0.5f);
+				font.draw(batch, "No unit selected", 0, Gdx.graphics.getHeight() - ((Gdx.graphics.getHeight()*84)/524));
+			}
+		if (scroll != null && scroll.type != null && scroll.type.dgt == 0) {
+			batch.draw(this.createButton, Constants.createButtonCenterX, 0, Constants.buttonSizeX, Constants.buttonSizeY);
+		}
+        if (scroll.ad.size() == 0) {
+            Texture win = new Texture("victory.png");
+            batch.draw(win, (Gdx.graphics.getWidth() / 2) - Gdx.graphics.getHeight() / 8, (Gdx.graphics.getHeight() / 2) - Gdx.graphics.getHeight() / 8/*(win.getHeight() / 2)*/, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4);
+        }
+			batch.end();
+	}
 	@Override
 	public void dispose() {
 	}

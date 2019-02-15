@@ -16,12 +16,12 @@ import eu.epiciv.gamemanager.Main_game;
 public class MainMenu extends GameState{
 
     private Texture background, newGameButton, exitButton;
-    private BitmapFont gameTitleText;
-    private FreeTypeFontGenerator generator;
-    private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+//    private BitmapFont gameTitleText;
+//    private FreeTypeFontGenerator generator;
+//    private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     public Main_game scroll;
     private float delta;
-    private GlyphLayout gameTitleGlyph;
+//    private GlyphLayout gameTitleGlyph;
     private Music music = Gdx.audio.newMusic(Gdx.files.internal("music/music_menu.mp3"));
     private int xTouch = 0;
     private int yTouch = 0;
@@ -34,12 +34,12 @@ public class MainMenu extends GameState{
         this.background = new Texture("home/background.png");
         this.newGameButton = new Texture("buttons/newGameButton.png");
         this.exitButton = new Texture("buttons/exitButton.png");
-        this.generator = new FreeTypeFontGenerator(Gdx.files.internal("font/titleFont.ttf"));
-        this.parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        this.parameter.size = Gdx.graphics.getHeight() / 4;
-        this.gameTitleText = this.generator.generateFont(this.parameter);
-        this.gameTitleGlyph = new GlyphLayout();
-        this.gameTitleGlyph.setText(this.gameTitleText, Constants.GAME_TITLE);
+//        this.generator = new FreeTypeFontGenerator(Gdx.files.internal("font/titleFont.ttf"));
+//        this.parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+//        this.parameter.size = Gdx.graphics.getHeight() / 4;
+//        this.gameTitleText = this.generator.generateFont(this.parameter);
+//        this.gameTitleGlyph = new GlyphLayout();
+//        this.gameTitleGlyph.setText(this.gameTitleText, Constants.GAME_TITLE);
         this.cam.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
     }
 
@@ -73,7 +73,7 @@ public class MainMenu extends GameState{
         sb.draw(this.exitButton, Constants.centerX, Constants.buttonSizeY * 2, Constants.buttonSizeX, Constants.buttonSizeY);
         sb.draw(this.newGameButton, Constants.centerX, Constants.buttonSizeY * 4, Constants.buttonSizeX, Constants.buttonSizeY);
 
-        this.gameTitleText.draw(sb, this.gameTitleGlyph, Constants.VIEWPORT_WIDTH / 2 - this.gameTitleGlyph.width / 2,  Constants.buttonSizeY * 7.75f);
+//        this.gameTitleText.draw(sb, this.gameTitleGlyph, Constants.VIEWPORT_WIDTH / 2 - this.gameTitleGlyph.width / 2,  Constants.buttonSizeY * 7.75f);
 
         sb.end();
     }
@@ -83,7 +83,7 @@ public class MainMenu extends GameState{
         this.background.dispose();
         this.newGameButton.dispose();
         this.exitButton.dispose();
-        this.gameTitleText.dispose();
-        this.generator.dispose();
+//        this.gameTitleText.dispose();
+//        this.generator.dispose();
     }
 }
