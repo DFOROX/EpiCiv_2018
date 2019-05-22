@@ -1,20 +1,27 @@
 {
     "logs": [
         {
-            "outputFile": "/home/theo/Desktop/ProjetHub/EpiCiv_2018/EpiCiv_2018-master/android/build/intermediates/res/merged/debug/values_values.arsc.flat",
+            "outputFile": "/home/quentin/Bureau/EpiCiv_2018/EpiCiv_2018-master/android/build/intermediates/res/merged/debug/values_values.arsc.flat",
             "map": [
                 {
-                    "source": "/home/theo/Desktop/ProjetHub/EpiCiv_2018/EpiCiv_2018-master/android/res/values/color.xml",
+                    "source": "/home/quentin/Bureau/EpiCiv_2018/EpiCiv_2018-master/android/res/values/strings.xml",
                     "from": {
-                        "startLines": "2",
+                        "startLines": "3",
                         "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "55",
-                        "endOffsets": "106"
+                        "startOffsets": "56",
+                        "endColumns": "43",
+                        "endOffsets": "95"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "111",
+                        "endColumns": "43",
+                        "endOffsets": "150"
                     }
                 },
                 {
-                    "source": "/home/theo/Desktop/ProjetHub/EpiCiv_2018/EpiCiv_2018-master/android/res/values/styles.xml",
+                    "source": "/home/quentin/Bureau/EpiCiv_2018/EpiCiv_2018-master/android/res/values/styles.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -33,20 +40,13 @@
                     }
                 },
                 {
-                    "source": "/home/theo/Desktop/ProjetHub/EpiCiv_2018/EpiCiv_2018-master/android/res/values/strings.xml",
+                    "source": "/home/quentin/Bureau/EpiCiv_2018/EpiCiv_2018-master/android/res/values/color.xml",
                     "from": {
-                        "startLines": "3",
+                        "startLines": "2",
                         "startColumns": "4",
-                        "startOffsets": "56",
-                        "endColumns": "43",
-                        "endOffsets": "95"
-                    },
-                    "to": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "111",
-                        "endColumns": "43",
-                        "endOffsets": "150"
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
                     }
                 }
             ]
